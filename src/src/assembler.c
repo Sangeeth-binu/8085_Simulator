@@ -268,12 +268,12 @@ void handle_xchg(void) { printf("XCHG instruction\n"); }
 // A
 VALUE(reg_a_sym, "A", 0x07, NULL)                             // Accumulator
 INSTRUCTION(adc_sym, "ADC", 0x88, handle_adc, &reg_a_sym)     // Base: 10001rrr
-INSTRUCTION(add_sym, "ADD", 0x80, handle_add, &adc_sym)       // Base: 10000rrr
+INSTRUCTION(add_sym, "ADD", OP_ADD, handle_add, &adc_sym)       // Base: 10000rrr
 INSTRUCTION(aci_sym, "ACI", 0xCE, handle_aci, &add_sym)       // Add immediate with carry
 INSTRUCTION(adi_sym, "ADI", 0xC6, handle_adi, &aci_sym)       // Add immediate
 INSTRUCTION(ana_sym, "ANA", 0xA0, handle_ana, &adi_sym)       // Base: 10100rrr
 INSTRUCTION(ani_sym, "ANI", 0xE6, handle_ani, &ana_sym)       // AND immediate
-INSTRUCTION(and_sym, "AND", 0x00, handle_and, &ani_sym)       // Logical AND operator
+INSTRUCTION(and_sym, "AND", OP_AND, handle_and, &ani_sym)       // Logical AND operator
 //B
 VALUE(reg_b_sym, "B", 0x00, NULL)                             // Register B
 VALUE(reg_bc_sym, "BC", 0x00, &reg_b_sym)                     // BC pair
@@ -353,18 +353,18 @@ INSTRUCTION(lda_sym, "LDA", 0x3A, handle_lda, &ldax_sym)      // Load A direct
 VALUE(reg_m_sym, "M", 0x06, NULL)    // Memory (HL)
 INSTRUCTION(mov_sym, "MOV", 0x40, handle_mov, &reg_m_sym)     // Base: 01dddss
 INSTRUCTION(mvi_sym, "MVI", 0x06, handle_mvi, &mov_sym)       // Base: 00ddd110
-INSTRUCTION(mod_sym, "MOD", 0x00, handle_mod, &mvi_sym)       // Modulo operator
+INSTRUCTION(mod_sym, "MOD", OP_MOD, handle_mod, &mvi_sym)       // Modulo operator
 
 // N
 INSTRUCTION(nop_sym, "NOP", 0x00, handle_nop, NULL)           // No operation
-INSTRUCTION(not_sym, "NOT", 0x00, handle_not, &nop_sym)       // Logical NOT operator
+INSTRUCTION(not_sym, "NOT", OP_NOT, handle_not, &nop_sym)       // Logical NOT operator
 
 // O
 INSTRUCTION(org_sym, "ORG", 0x00, handle_org, NULL)           // Origin/Start address
 INSTRUCTION(ora_sym, "ORA", 0xB0, handle_ora, &org_sym)       // Base: 10110rrr
 INSTRUCTION(ori_sym, "ORI", 0xF6, handle_ori, &ora_sym)       // OR immediate
 INSTRUCTION(out_sym, "OUT", 0xD3, handle_out, &ori_sym)       // Output to port
-INSTRUCTION(or_sym, "OR", 0x00, handle_or, &out_sym)          // Logical OR operator
+INSTRUCTION(or_sym, "OR", OP_OR, handle_or, &out_sym)          // Logical OR operator
 
 // P
 INSTRUCTION(pchl_sym, "PCHL", 0xE9, handle_pchl, NULL)
@@ -400,7 +400,7 @@ INSTRUCTION(rz_sym, "RZ", 0xC8, handle_rz, &rst7_sym)         // Return if zero
 VALUE(reg_sp_sym, "SP", 0x03, NULL) // Stack pointer
 INSTRUCTION(set_sym, "SET", OP_SET, operator_callback,&reg_sp_sym)    
 INSTRUCTION(shl_sym, "SHL", OP_SHL, operator_callback,&set_sym)      
-INSTRUCTION(shr_sym, "SHR", 0x00, operator_callback,&shl_sym)
+INSTRUCTION(shr_sym, "SHR", OP_SHR, operator_callback,&shl_sym)
 INSTRUCTION(sbb_sym, "SBB", 0x98, handle_sbb, &shr_sym)       // Base: 10011rrr
 INSTRUCTION(sbi_sym, "SBI", 0xDE, handle_sbi, &sbb_sym)       // Subtract immediate with borrow
 INSTRUCTION(shld_sym, "SHLD", 0x22, handle_shld, &sbi_sym)    // Store HL direct
@@ -408,7 +408,7 @@ INSTRUCTION(sphl_sym, "SPHL", 0xF9, handle_sphl, &shld_sym)   // Copy HL to SP
 INSTRUCTION(sta_sym, "STA", 0x32, handle_sta, &sphl_sym)      // Store A direct
 INSTRUCTION(stax_sym, "STAX", 0x02, handle_stax, &sta_sym)    // Base: 00rp0010
 INSTRUCTION(stc_sym, "STC", 0x37, handle_stc, &stax_sym)      // Set carry
-INSTRUCTION(sub_sym, "SUB", 0x90, handle_sub, &stc_sym)       // Base: 10010rrr
+INSTRUCTION(sub_sym, "SUB", OP_SUB, handle_sub, &stc_sym)       // Base: 10010rrr
 INSTRUCTION(sui_sym, "SUI", 0xD6, handle_sui, &sub_sym)       // Subtract immediate
 
 // X
