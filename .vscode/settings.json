@@ -19,5 +19,9 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#000000",
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "typeinfo": "c",
+        "type_traits": "c"
+    }
 }
